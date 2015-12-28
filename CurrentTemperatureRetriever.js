@@ -3,8 +3,8 @@
 var http = require('http');
 var assert = require('assert');
 
-exports.currentTempteratureRetriever = function () {
-  var url = "http://api.openweathermap.org/data/2.5/weather?q=Amurrio,uk&appid=2de143494c0b295cca9337e1e96b00e0&units=metric";
+module.exports = function(town, key) {
+  var url = `http://api.openweathermap.org/data/2.5/weather?q=${town},uk&appid=${key}&units=metric`;
   var promise = new Promise(function (resolve, reject) {
     http.get(url, function (res) {
       res.on('data', function (chunk) {

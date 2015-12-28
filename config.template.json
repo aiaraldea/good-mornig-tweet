@@ -10,5 +10,8 @@
         "long": "-3.001111"
     },
     "town": "Amurrio",
-    "photo": "photo.jpg"
+    "aemetCode": "",
+    "photo": "photo.jpg",
+    "forecastUrl": "http://www.aiaraldea.eus/eguraldia/Amurrio?utm_source=eguraldia&utm_medium=txio&utm_campaign=eguraldia",
+    "openweathermapKey": ""
 }

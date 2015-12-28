@@ -1,14 +1,18 @@
 "use strict";
 
-exports.messageComposer = function(currentTemperature, forecast) {
-
+var MessageComposer = function(townName, forecastUrl) {
+    this.townName = townName;
+    this.forecastUrl = forecastUrl;
+};
+MessageComposer.prototype.compose = function(currentTemperature, forecast) {
     var getTodayMax = function(forecast) {
         return forecast.maxTemperature;
     }
 
     let maximunTemperature = getTodayMax(forecast);
     let roundedTemperature = Math.round(currentTemperature * 10) / 10;
-    let forecastUrl = "http://www.aiaraldea.eus/eguraldia/Amurrio?utm_source=eguraldia&utm_medium=txio&utm_campaign=eguraldia";
-    return `Egunon Aiaraldea. Orain Amurrion ${roundedTemperature}ºC dago. Gaurko maximoa ${maximunTemperature}ºC. Iragarpen osoa: ${forecastUrl}`;
-
+    return `Egunon Aiaraldea. Orain ${this.townName}n ${roundedTemperature}ºC dago. Gaurko maximoa ${maximunTemperature}ºC. Iragarpen osoa: ${this.forecastUrl}`;
+};
+module.exports = function(townName, forecastUrl) {
+    return new MessageComposer(townName, forecastUrl);
 };

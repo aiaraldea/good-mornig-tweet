@@ -5,9 +5,11 @@ var Sunwatcher = require('sunwatcher');
 var weatherTweet = weatherTweet || {};
 weatherTweet.config = require('./config.json');
 weatherTweet.tweetSender = require('./TweetSender.js')(weatherTweet.config.twitter);
-weatherTweet.currentTempteratureRetriever = require('./CurrentTemperatureRetriever.js').currentTempteratureRetriever;
+weatherTweet.currentTemperatureRetriever = require('./CurrentTemperatureRetriever.js');
 weatherTweet.forecastRetriver = require('./ForecastRetriever.js').forecastRetriever;
-weatherTweet.messageComposer = require('./MessageComposer.js').messageComposer;
+weatherTweet.MessageComposer = require('./MessageComposer.js');
+
+weatherTweet.messageComposer = weatherTweet.MessageComposer(weatherTweet.config.town, weatherTweet.config.forecastUrl);
 
 console.log("Config %j", weatherTweet.config);
 try {
@@ -23,12 +25,16 @@ catch (err) {
 
 weatherTweet.sendGoodMorning = function() {
   let forecastPromise = weatherTweet.forecastRetriver();
-  let temperaturePromise = weatherTweet.currentTempteratureRetriever();
+  let temperaturePromise = weatherTweet.currentTemperatureRetriever(
+    weatherTweet.config.town,
+    weatherTweet.config.openweathermapKey);
   Promise.all([temperaturePromise, forecastPromise]).then(function(values) {
+    console.log("%j", values[0]);
     console.log("%j", values[1]);
-    let message = weatherTweet.messageComposer(values[0], values[1]);
+    console.log("%j", weatherTweet.messageComposer.compose);
+    let message = weatherTweet.messageComposer.compose(values[0], values[1]);
     console.log(message);
-    weatherTweet.tweetSender.send(message, weatherTweet.config.photo);
+    // weatherTweet.tweetSender.send(message, weatherTweet.config.photo);
   }, function(err) {
     console.error(err);
   })
@@ -52,15 +58,9 @@ weatherTweet.subscribe = function() {
     weatherTweet.sendGoodMorning();
   });
 };
-//weatherTweet.subscribe();
-weatherTweet.sendGoodMorning();
+weatherTweet.subscribe();
+// weatherTweet.sendGoodMorning();
 
-/**
- * Keep the script alive
- */
-setInterval(function() {
-  console.log("still alive");
-}, 86400000);
 
 /*
  * Schedule for sunrise or dawn
