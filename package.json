@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A daemon app to say good morning on Twitter",
   "main": "main.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
   "repository": "",
   "author": "Iñaki Ibarrola <inakiibarrola@gmail.com>",
   "dependencies": {

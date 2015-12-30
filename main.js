@@ -13,11 +13,12 @@ weatherTweet.messageComposer = weatherTweet.MessageComposer(weatherTweet.config.
 
 console.log("Config %j", weatherTweet.config);
 try {
-  // var fs = require('fs');
-  // var fd = fs.openSync('app.log', 'a');
-  // require('daemon')({
-  //   stdout: fd
-  // });
+  var fs = require('fs');
+  var fd = fs.openSync('app.log', 'a');
+  require('daemon')({
+    stdout: fd,
+    stderr:fd
+  });
 }
 catch (err) {
   console.error(err);
@@ -29,12 +30,10 @@ weatherTweet.sendGoodMorning = function() {
     weatherTweet.config.town,
     weatherTweet.config.openweathermapKey);
   Promise.all([temperaturePromise, forecastPromise]).then(function(values) {
-    console.log("%j", values[0]);
     console.log("%j", values[1]);
-    console.log("%j", weatherTweet.messageComposer.compose);
     let message = weatherTweet.messageComposer.compose(values[0], values[1]);
     console.log(message);
-    // weatherTweet.tweetSender.send(message, weatherTweet.config.photo);
+    weatherTweet.tweetSender.send(message, weatherTweet.config.photo);
   }, function(err) {
     console.error(err);
   })
