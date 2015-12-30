@@ -5,3 +5,6 @@
 2) Run with node
 
     $ node main.js
+
+
+[![Build status](https://travis-ci.org/aiaraldea/good-morning-tweet.svg)]
