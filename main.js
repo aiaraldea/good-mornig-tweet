@@ -17,7 +17,7 @@ try {
   var fd = fs.openSync('app.log', 'a');
   require('daemon')({
     stdout: fd,
-    stderr:fd
+    stderr: fd
   });
 }
 catch (err) {
