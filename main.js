@@ -47,7 +47,7 @@ weatherTweet.subscribe = function() {
 
 
   sunwatcher.on("sunrise", function(now, sunrise, sunriseEnd) {
-    if (now - weatherTweet.lastEventDate < 120000) {
+    if (now - weatherTweet.lastEventDate < 7200000) {
       console.log('discarding event %j %j %j', now);
       // The event has been already processed in the last 2 hours.
       return;
