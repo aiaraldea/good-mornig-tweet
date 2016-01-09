@@ -1,6 +1,6 @@
 "use strict";
 
-var Sunwatcher = require('sunwatcher');
+var Sunwatcher = require('./sunwatcher');
 
 var weatherTweet = weatherTweet || {};
 weatherTweet.config = require('./config.json');
@@ -13,12 +13,12 @@ weatherTweet.messageComposer = weatherTweet.MessageComposer(weatherTweet.config.
 
 console.log("Config %j", weatherTweet.config);
 try {
-  var fs = require('fs');
-  var fd = fs.openSync('app.log', 'a');
-  require('daemon')({
-    stdout: fd,
-    stderr: fd
-  });
+  // var fs = require('fs');
+  // var fd = fs.openSync('app.log', 'a');
+  // require('daemon')({
+  //   stdout: fd,
+  //   stderr: fd
+  // });
 }
 catch (err) {
   console.error(err);
@@ -46,14 +46,14 @@ weatherTweet.subscribe = function() {
   sunwatcher.startSunWatch();
 
 
-  sunwatcher.on("sunrise", function(now, sunrise, sunriseEnd) {
+  sunwatcher.on("dawn", function(now, dawn, sunrise) {
     if (now - weatherTweet.lastEventDate < 7200000) {
       console.log('discarding event %j %j %j', now);
       // The event has been already processed in the last 2 hours.
       return;
     }
     weatherTweet.lastEventDate = now;
-    console.log('sunrise!! %j %j %j', now, sunrise, sunriseEnd);
+    console.log('dawn!! %j %j %j', now, dawn, sunrise);
     weatherTweet.sendGoodMorning();
   });
 };
