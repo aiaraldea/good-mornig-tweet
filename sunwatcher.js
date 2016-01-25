@@ -40,8 +40,8 @@ Sunwatcher.prototype.startSunWatch = function () {
         }
 
         if (isSunBetween('nauticalDusk', 'night', now, sunPosition)) {
-            console.log("emit nauticalDusk");
-            self.emit("nauticalDusk", now, sunPosition.sunriseEnd, sunPosition.sunsetStart);
+            console.log("emit nauticalDusk %j %j", sunPosition.nauticalDusk, sunPosition.night);
+            self.emit("nauticalDusk", now, sunPosition.nauticalDusk, sunPosition.night);
         }
         if (isSunBetween('sunrise', 'sunriseEnd', now, sunPosition)) {
             console.log("emit sunrise");
