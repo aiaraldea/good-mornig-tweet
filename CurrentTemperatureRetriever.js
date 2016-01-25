@@ -10,8 +10,8 @@ module.exports = function(town, key) {
       res.on('data', function (chunk) {
         // TODO reject on fail
         try {
-//      console.log(chunk);
           let weather = JSON.parse(chunk);
+          console.log(weather);
           assert.ok(Number.isFinite(weather.main.temp));
           resolve(weather.main.temp);
         } catch (e) {

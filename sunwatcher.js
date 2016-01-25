@@ -36,14 +36,16 @@ Sunwatcher.prototype.startSunWatch = function () {
         var difference = getDifferenceBetweenNowAndSunType('nightEnd', now, sunPosition);
         if (difference <= -(24 * 60 - 5) * 60 * 1000) {
             // If we are comparing to yesterdays date update it.
-            console.log('Recalculate sun positions %j', sunPosition);
             sunPosition = getSunPosition(self._config.latitude, self._config.longitude);
-            console.log('Recalculate sun positions %j', sunPosition);
         }
 
-        if (isSunBetween('dawn', 'sunrise', now, sunPosition)) {
-            console.log("emit dawn");
-            self.emit("dawn", now, sunPosition.sunriseEnd, sunPosition.sunsetStart);
+        if (isSunBetween('nauticalDusk', 'night', now, sunPosition)) {
+            console.log("emit nauticalDusk");
+            self.emit("nauticalDusk", now, sunPosition.sunriseEnd, sunPosition.sunsetStart);
+        }
+        if (isSunBetween('sunrise', 'sunriseEnd', now, sunPosition)) {
+            console.log("emit sunrise");
+            self.emit("sunrise", now, sunPosition.sunrise, sunPosition.sunsetStart);
         }
     }, 20000); // Runs every 20 seconds
 };

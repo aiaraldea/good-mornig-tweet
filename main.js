@@ -46,14 +46,14 @@ weatherTweet.subscribe = function() {
   sunwatcher.startSunWatch();
 
 
-  sunwatcher.on("dawn", function(now, dawn, sunrise) {
+  sunwatcher.on("sunrise", function(now, dawn, sunrise) {
     if (now - weatherTweet.lastEventDate < 7200000) {
-      console.log('discarding event %j %j %j', now);
+      console.log('discarding event %j', now);
       // The event has been already processed in the last 2 hours.
       return;
     }
     weatherTweet.lastEventDate = now;
-    console.log('dawn!! %j %j %j', now, dawn, sunrise);
+    console.log('sunrise!! %j %j %j', now, dawn, sunrise);
     weatherTweet.sendGoodMorning();
   });
 };
